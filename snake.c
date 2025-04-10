@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <windows.h>
 
 const char g_szClassName[] = "snakeWindowClass";
@@ -19,10 +18,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
+HWND hwnd;
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     WNDCLASSEX wc;
-    HWND hwnd;
+    
     MSG Msg;
 
     wc.cbSize           = sizeof(WNDCLASSEX);
@@ -49,7 +50,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         g_szClassName,
         "Snake",
         WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT, 240, 120,
+        CW_USEDEFAULT, CW_USEDEFAULT, 300, 300,
         NULL, NULL, hInstance, NULL
     );
 
@@ -68,11 +69,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         DispatchMessage(&Msg);
     }
     return Msg.wParam;
+};
+
+
+
+
+int main() {
+    HDC screen = GetDC(hwnd);
+    HBRUSH blueBrush = CreateSolidBrush(RGB(0, 0, 255));
+    SelectObject(screen, blueBrush);
+    for (;;)
+    {
+        Rectangle(screen, 0, 0, 300, 25);
+        Rectangle(screen, 275, 25, 300, 275);
+        Rectangle(screen, 0, 25, 25, 275);
+        Rectangle(screen, 0, 275, 300, 300);
+        Sleep(20);
+    }
+    ReleaseDC(hwnd, screen);
 }
-
-
-
-// int main() {
-//     printf("Hello World!\n");
-//     return 0;
-// }
