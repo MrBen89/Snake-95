@@ -85,6 +85,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 0;
     }
 
+    //FreeConsole();
     
 
     ShowWindow(hwnd, nCmdShow);
@@ -94,7 +95,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     drawSnakeSeg(75, 25);
     UpdateWindow(hwnd);
 
-    for (;;) {
+    
+
+    while(GetMessage(&Msg, NULL, 0, 0) > 0)
+    {
+        TranslateMessage(&Msg);
+        DispatchMessage(&Msg);
         if (GetAsyncKeyState(37) < 0)
             {
                 fputs("left", stdout);
@@ -111,39 +117,31 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             {
                 fputs("down", stdout);
             };
-        UpdateWindow(hwnd);
-              
-        //printf("key: \n" );
-        Sleep(100);
-    };
-
-    while(GetMessage(&Msg, NULL, 0, 0) > 0)
-    {
-        TranslateMessage(&Msg);
-        DispatchMessage(&Msg);
     }
     return Msg.wParam;
+
+    // while (1) {
+        
+    //     if (GetAsyncKeyState(37) < 0)
+    //         {
+    //             fputs("left", stdout);
+    //         };
+    //     if (GetAsyncKeyState(38) < 0)
+    //         {
+    //             fputs("up", stdout);
+    //         };
+    //     if (GetAsyncKeyState(39) < 0)
+    //         {
+    //             fputs("right", stdout);
+    //         };
+    //     if (GetAsyncKeyState(40) < 0)
+    //         {
+    //             fputs("down", stdout);
+    //         };
+    //     UpdateWindow(hwnd);
+    //     SetFocus(hwnd);
+              
+    //     //printf("key: \n" );
+    //     Sleep(1000);
+    // };
 };
-
-
-
-
-
-// int main() {
-//     HDC screen = GetDC(hwnd);
-//     HBRUSH blueBrush = CreateSolidBrush(RGB(0, 0, 255));
-//     SelectObject(screen, blueBrush);
-//     for (;;)
-//     {
-//         // Rectangle(screen, 0, 0, 300, 300);
-//         // HBRUSH whiteBrush = CreateSolidBrush(RGB(255, 255, 255));
-//         // SelectObject(screen, whiteBrush);
-//         // Rectangle(screen, 25, 25, 275, 275);
-//         Rectangle(screen, 0, 0, 300, 25);
-//         Rectangle(screen, 275, 25, 300, 275);
-//         Rectangle(screen, 0, 24, 26, 276);
-//         Rectangle(screen, 0, 274, 300, 300);
-//         //Sleep(20);
-//     }
-//     ReleaseDC(hwnd, screen);
-// }
