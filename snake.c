@@ -1,4 +1,6 @@
 #include <windows.h>
+#include <conio.h>
+#include <stdio.h>
 
 const char g_szClassName[] = "snakeWindowClass";
 
@@ -87,8 +89,33 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     ShowWindow(hwnd, nCmdShow);
     drawBorder();
-    drawSnakeSeg(100, 100);
+    drawSnakeSeg(25, 25);
+    drawSnakeSeg(50, 25);
+    drawSnakeSeg(75, 25);
     UpdateWindow(hwnd);
+
+    for (;;) {
+        if (GetAsyncKeyState(37) < 0)
+            {
+                fputs("left", stdout);
+            };
+        if (GetAsyncKeyState(38) < 0)
+            {
+                fputs("up", stdout);
+            };
+        if (GetAsyncKeyState(39) < 0)
+            {
+                fputs("right", stdout);
+            };
+        if (GetAsyncKeyState(40) < 0)
+            {
+                fputs("down", stdout);
+            };
+        UpdateWindow(hwnd);
+              
+        //printf("key: \n" );
+        Sleep(100);
+    };
 
     while(GetMessage(&Msg, NULL, 0, 0) > 0)
     {
