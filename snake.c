@@ -100,6 +100,7 @@ void drawSnakeSeg(int x, int y)
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     insertFirst(1,1);
+    insertFirst(5,5);
     WNDCLASSEX wc;
     
     MSG Msg;
@@ -143,6 +144,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     ShowWindow(hwnd, nCmdShow);
     drawBorder();
+    struct node * temp = head;
+    while(temp!=NULL)
+    {
+        drawSnakeSeg(temp->xVal*25, temp->yVal*25);
+        // do something
+        temp= temp->next;
+    }
+
     drawSnakeSeg(head->xVal*25, head->yVal*25);
     //drawSnakeSeg(atoi(coords[1].xVal)*25, atoi(coords[1].yVal)*25);
     UpdateWindow(hwnd);
