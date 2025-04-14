@@ -1,9 +1,61 @@
 #include <windows.h>
 #include <conio.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 const char g_szClassName[] = "snakeWindowClass";
 
+struct node {
+    int xVal;
+    int yVal;
+    struct node *next;
+ };
+ struct node *head = NULL;
+ struct node *current = NULL;
+
+ void insertFirst(int xVal, int yVal){
+
+    //create a link
+    struct node *lk = (struct node*) malloc(sizeof(struct node));
+    lk->xVal = xVal;
+    lk->yVal = yVal;
+ 
+    // point it to old first node
+    lk->next = head;
+ 
+    //point first to new first node
+    head = lk;
+ };
+
+ void insertLast(int xVal, int yVal){
+
+    //create a link
+    struct node *lk = (struct node*) malloc(sizeof(struct node));
+    lk->xVal = xVal;
+    lk->yVal = yVal;
+    struct node *linkedlist = head;
+ 
+    // point it to old first node
+    while(linkedlist->next != NULL)
+       linkedlist = linkedlist->next;
+ 
+    //point first to new first node
+    linkedlist->next = lk;
+ };
+
+ void deleteFirst(){
+    head = head->next;
+ };
+
+ void deleteLast(){
+    struct node *linkedlist = head;
+    while (linkedlist->next->next != NULL)
+       linkedlist = linkedlist->next;
+    linkedlist->next = NULL;
+ };
+
+ 
+ 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch(msg)
@@ -47,6 +99,7 @@ void drawSnakeSeg(int x, int y)
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+    insertFirst(1,1);
     WNDCLASSEX wc;
     
     MSG Msg;
@@ -90,9 +143,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     ShowWindow(hwnd, nCmdShow);
     drawBorder();
-    drawSnakeSeg(25, 25);
-    drawSnakeSeg(50, 25);
-    drawSnakeSeg(75, 25);
+    drawSnakeSeg(head->xVal*25, head->yVal*25);
+    //drawSnakeSeg(atoi(coords[1].xVal)*25, atoi(coords[1].yVal)*25);
     UpdateWindow(hwnd);
 
     
